@@ -1,0 +1,65 @@
+### POST /transactions - Criar transação (Válida)
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+  "description": "Compras no mercado",
+  "amount": 15000,
+  "category": "GROCERIES"
+}
+
+### POST /transactions - Testar Validação (Erro 400 - valor negativo e sem descrição)
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{
+  "description": "",
+  "amount": -50,
+  "category": "FOOD"
+}
+
+### GET /transactions/summary - Obter Resumo Financeiro Geral e por Categoria
+GET http://localhost:8080/transactions/summary
+
+### GET /transactions/GROCERIES - Listar por categoria
+GET http://localhost:8080/transactions/GROCERIES
+
+### GET /transactions/PHARMA - Listar por categoria
+GET http://localhost:8080/transactions/PHARMA
+
+### GET /transactions/AUTO - Listar por categoria
+GET http://localhost:8080/transactions/AUTO
+
+### POST /transactions/ai - Transcrever áudio e processar com IA
+POST http://localhost:8080/transactions/ai
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="audio11.m4a"
+
+< ./src/test/resources/audio/audio11.m4a
+--boundary--
+
+### 1. Testar ChatClientController (/api/chat)
+GET http://localhost:8080/api/chat?prompt=Gere um registro de gasto no mercado com valor e local
+
+### 2. Testar ChatModelController (/api/chat-model)
+GET http://localhost:8080/api/chat-model?prompt=Gere um exemplo de orçamento mensal
+
+### 3. Testar SpeechController (/api/sinthesize)
+POST http://localhost:8080/api/sinthesize
+Content-Type: application/json
+
+{
+  "text": "O valor total do serviço ficou em 80 reais. Posso confirmar o pagamento?"
+}
+
+### 4. Testar TranscriptionController (/api/transcribe)
+POST http://localhost:8080/api/transcribe
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="audio1.m4a"
+
+< ./src/test/resources/audio/audio1.m4a
+--boundary--
